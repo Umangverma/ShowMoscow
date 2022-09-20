@@ -1,0 +1,90 @@
+<aura:component controller="ShowMoscowStatusController" implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+    <aura:attribute name="moscowWrapper" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--<lightning:select name="pfsId" label="Select a PFS:" aura:id="pfsId">
+        <aura:iteration items="{!v.moscowWrapper.pfsList}" var="option">
+            <option text="{!option.label}" value="{!option.id}" selected="{!option.selected}"/>
+        </aura:iteration>
+    </lightning:select>-->
+    <lightning:card>
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem padding="around-small" size="3">
+                <div class="slds-box" ondragover="{!c.allowDrop}" ondrop="{!c.onTBDDrop}" ondblclick="{!c.openFeature}">
+                    <div style="font-size:24px; text-align:center; background-color: blue; color:white; font-weight: bold; max-height: 50vh;">TBD</div>
+                    <div class="slds-scrollable--y" style="max-height: 50vh;overflow: auto;">
+                    <aura:iteration items="{!v.moscowWrapper.tbdList}" var="tbdItem">
+                        <div class="slds-box" draggable="true" ondragstart ="{!c.dragStart}" id="{!tbdItem.Id}" data-projid="{!tbdItem.featureboard__Project__c}"
+                             style="font-size:12px; cursor: pointer;">
+                            <b>Feature Name</b> : {!tbdItem.Name} <br/>
+                            <!--<b>MoSCoW</b> : {!tbdItem.MoSCoW_Priority__c} <br/>-->
+                            <b>Process Flow Segment</b> : {!tbdItem.featureboard__Process_Flow_Segment__r.Name} <br/>
+                        </div>
+                    </aura:iteration>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="3">
+                <div class="slds-box" ondragover="{!c.allowDrop}" ondrop="{!c.onMustHaveDrop}" ondblclick="{!c.openFeature}">
+                    <div style="font-size:24px; text-align:center; background-color: blue; color:white; font-weight: bold; max-height: 50vh;">MUST HAVE</div>
+                    <div class="slds-scrollable--y" style="max-height: 50vh;overflow: auto;">
+                    <aura:iteration items="{!v.moscowWrapper.musthaveList}" var="mustHaveItem">
+                        <div class="slds-box" draggable="true" ondragstart ="{!c.dragStart}" id="{!mustHaveItem.Id}" data-projid="{!mustHaveItem.featureboard__Project__c}"
+                             style="font-size:12px; cursor: pointer;">
+                            <b>Feature Name</b> : {!mustHaveItem.Name} <br/>
+                            <!--<b>MoSCoW</b> : {!mustHaveItem.MoSCoW_Priority__c} <br/>-->
+                            <b>Process Flow Segment</b> : {!mustHaveItem.featureboard__Process_Flow_Segment__r.Name} <br/>
+                        </div>
+                    </aura:iteration>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="3">
+                <div class="slds-box" ondragover="{!c.allowDrop}" ondrop="{!c.onShouldHaveDrop}" ondblclick="{!c.openFeature}">
+                    <div style="font-size:24px; text-align:center; background-color: blue; color:white; font-weight: bold; max-height: 50vh;">SHOULD HAVE</div>
+                    <div class="slds-scrollable--y" style="max-height: 50vh;overflow: auto;">
+                    <aura:iteration items="{!v.moscowWrapper.shouldhaveList}" var="shouldHaveItem">
+                        <div class="slds-box" draggable="true" ondragstart ="{!c.dragStart}" id="{!shouldHaveItem.Id}" data-projid="{!shouldHaveItem.featureboard__Project__c}"
+                             style="font-size:12px; cursor: pointer;">
+                            <b>Feature Name</b> : {!shouldHaveItem.Name} <br/>
+                            <!--<b>MoSCoW</b> : {!shouldHaveItem.MoSCoW_Priority__c} <br/>-->
+                            <b>Process Flow Segment</b> : {!shouldHaveItem.featureboard__Process_Flow_Segment__r.Name} <br/>
+                        </div>
+                    </aura:iteration>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="3">
+                <div class="slds-box" ondragover="{!c.allowDrop}" ondrop="{!c.onCouldHaveDrop}" ondblclick="{!c.openFeature}">
+                    <div style="font-size:24px; text-align:center; background-color: blue; color:white; font-weight: bold; max-height: 50vh;">COULD HAVE</div>
+                    <div class="slds-scrollable--y" style="max-height: 50vh;overflow: auto;">
+                    <aura:iteration items="{!v.moscowWrapper.couldhaveList}" var="couldHaveItem">
+                        <div class="slds-box" draggable="true" ondragstart ="{!c.dragStart}" id="{!couldHaveItem.Id}" data-projid="{!couldHaveItem.featureboard__Project__c}"
+                             style="font-size:12px; cursor: pointer;">
+                            <b>Feature Name</b> : {!couldHaveItem.Name} <br/>
+                            <!--<b>MoSCoW</b> : {!couldHaveItem.MoSCoW_Priority__c} <br/>-->
+                            <b>Process Flow Segment</b> : {!couldHaveItem.featureboard__Process_Flow_Segment__r.Name} <br/>
+                        </div>
+                    </aura:iteration>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <lightning:layout>
+            <lightning:layoutItem padding="around-small" size="3">
+                <div class="slds-box" ondragover="{!c.allowDrop}" ondrop="{!c.onWontHaveDrop}" ondblclick="{!c.openFeature}">
+                    <div style="font-size:24px; text-align:center; background-color: blue; color:white; font-weight: bold; max-height: 50vh;">IRRELEVANT/WON'T DO</div>
+                    <div class="slds-scrollable--y" style="max-height: 50vh;overflow: auto;">
+                    <aura:iteration items="{!v.moscowWrapper.wonthaveList}" var="wontHaveItem">
+                        <div class="slds-box" draggable="true" ondragstart ="{!c.dragStart}" id="{!wontHaveItem.Id}" data-projid="{!wontHaveItem.featureboard__Project__c}"
+                             style="font-size:12px; cursor: pointer;">
+                            <b>Feature Name</b> : {!wontHaveItem.Name} <br/>
+                            <!--<b>MoSCoW</b> : {!wontHaveItem.MoSCoW_Priority__c} <br/>-->
+                            <b>Process Flow Segment</b> : {!wontHaveItem.featureboard__Process_Flow_Segment__r.Name} <br/>
+                        </div>
+                    </aura:iteration>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:card>
+</aura:component>
